@@ -1,0 +1,70 @@
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-15">
+                    <div class="card">
+
+    <div class="card-header card-header-danger">
+        <h4 class="card-title">Demandes absences</h4>
+    </div>
+                        <button style="position: relative;left: 20px;top:10px" mat-fab color="primary" (click)="add()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+    <div class="card-body">
+
+        <table class="table table-hover table-striped">
+
+            <thead>
+
+            <th> type d'absence</th>
+            <th>Motif</th>
+            <th>nombre de jours </th>
+            <th>  premier jour </th>
+            <th> Dernier Jour </th>
+            <th> reprise</th>
+            <th> Interim </th>
+            <th style="text-align: center">Status</th>
+            <th style="text-align: center">Action</th>
+            </thead>
+            <tbody>
+            <tr>
+            <tr *ngFor="let a of absences | paginate : {id:'listing' , itemsPerPage:6,currentPage:demandeAbsenceService.page,totalItems:demandeAbsenceService.totalRecords } ; index as i ">
+                <td>{{a.type}}</td>
+                <td>
+                    <ng-container *ngIf="a.motif==null">---</ng-container>
+                    <ng-container>{{a.motif}}</ng-container>
+                </td>
+                <td style="text-align: center">{{a.nombrejours}}</td>
+
+                <td>{{a.firstDay}}</td>
+                <td>{{a.lastDay}}</td>
+                <td>{{a.reprise}}</td>
+                <td>{{a.interim}}</td>
+                 <td>{{a.status}}</td>
+                  <td>  <ng-container><span><button style="margin-right: 10px;background-color: #F5B041"   [disabled]="a.status=='En cours de traitement' || a.status=='refusée' || a.status=='acceptée'"  (click)="update(i,a)" mat-fab color="primary">
+                        <mat-icon>edit</mat-icon>
+                    </button></span>
+                    </ng-container>
+
+                    <ng-container><span>    <button [disabled]="a.status=='En cours de traitement'" (click)="delete(a,i)" mat-fab color="warn" aria-label="Example icon button with a delete icon">
+                        <mat-icon>delete</mat-icon>
+                    </button></span>
+                    </ng-container>
+
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+        <div>
+            <pagination-controls id="listing" maxSize="5" directionLinks="true" (pageChange)="demandeAbsenceService.page=$event"></pagination-controls>
+        </div>
+    </div>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+

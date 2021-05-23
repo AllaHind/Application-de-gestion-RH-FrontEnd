@@ -1,0 +1,126 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-8">
+              <div class="card">
+                  <div class="card-header card-header-danger" *ngIf="currentUser; else loggedOut">
+                      <h4 class="card-title">Mon profil</h4>
+
+                  </div>
+                  <div class="card-body" *ngIf="currentUser">
+
+                      <div class="row">
+                          <div class="col-md-4">
+                              <mat-form-field class="example-full-width">
+                                  <mat-label>Nom complet</mat-label>
+                                  <br>
+                                  <input matInput  disabled>{{currentUser.fullname }}
+                              </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                              <mat-form-field class="example-full-width">
+                                  <mat-label>Matricule</mat-label>
+                                  <br>
+                                  <input matInput disabled>{{currentUser.matricule}}
+                              </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                              <mat-form-field class="example-full-width">
+                                  <mat-label>Date de naissance</mat-label>
+                                  <br>
+                                  <input matInput disabled>{{currentUser.date_naissance}}
+                              </mat-form-field>
+                          </div>
+                      </div>
+                      <div class="row">
+                      <div class="col-md-4">
+                          <mat-form-field class="example-full-width">
+                              <mat-label>Ancienneté</mat-label>
+                              <br>
+                              <input matInput  disabled>{{currentUser.anciennete}}
+                          </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                          <mat-form-field class="example-full-width">
+                              <mat-label>Date embauche</mat-label>
+                              <br>
+                              <input matInput disabled>{{currentUser.dateEmbauche}}
+                          </mat-form-field>
+                      </div>
+                          <div class="col-md-4">
+                              <mat-form-field class="example-full-width">
+                                  <mat-label>Unité Organisationel</mat-label>
+                                  <br>
+                                  <input matInput disabled>{{currentUser.uniteOrgani}}
+                              </mat-form-field>
+                          </div>
+                  </div>
+                      <div class="row">
+                          <div class="col-md-4">
+                              <mat-form-field class="example-full-width">
+                                  <mat-label>Echelle</mat-label>
+                                  <br>
+                                  <input matInput  disabled>{{currentUser.echelle}}
+                              </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                              <mat-form-field class="example-full-width">
+                                  <mat-label>Echelon</mat-label>
+                                  <br>
+                                  <input matInput disabled>{{currentUser.echelon}}
+                              </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                              <mat-form-field class="example-full-width">
+                                  <mat-label>Indice</mat-label>
+                                  <br>
+                                  <input matInput disabled>{{currentUser.indice}}
+                              </mat-form-field>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-4">
+                              <mat-form-field class="example-full-width">
+                                  <mat-label>Date echelle</mat-label>
+                                  <br>
+                                  <input matInput  disabled>{{currentUser.datechelle}}
+                              </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                              <mat-form-field class="example-full-width">
+                                  <mat-label>Date echellon</mat-label>
+                                  <br>
+                                  <input matInput disabled>{{currentUser.datechelon}}
+                              </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                              <mat-form-field class="example-full-width">
+                                  <mat-label>Responsable</mat-label>
+                                  <br>
+                                  <input matInput disabled>{{currentUser.responsable}}
+                              </mat-form-field>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4" *ngIf="currentUser">
+              <div class="card card-profile">
+                  <div class="card-avatar">
+                      <a href="javascript:void(0)">
+                          <img style="width: 100px;height: 100px" src="/assets/img/0-removebg-preview.png"/>
+                      </a>
+                  </div>
+                  <div class="card-body">
+                      <h6 class="card-category text-gray">{{currentUser.fullname}}</h6>
+                      <h4 class="card-title">{{currentUser.nomComplet}}</h4>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+    <ng-template #loggedOut>
+        Veuillez vous connecter
+    </ng-template>
+</div>

@@ -1,0 +1,84 @@
+
+<div class="card">
+
+
+    <div class="card-body" >
+        <button style="position:relative;left:670px" (click)="onClose()" tabindex="-1" class="btn-dialog-close" mat-stroked-button ><mat-icon>clear</mat-icon></button>
+        <div class="form-group">
+<div class="row">
+            <mat-form-field appearance="fill" style="margin-right: 100px">
+                <mat-label>type d'absence</mat-label>
+                <mat-select matNativeControl required [(ngModel)]="absence.type">
+                    <mat-option  value="Congé">Congé</mat-option>
+                    <mat-option value="absence autorisée">absence autorisée</mat-option>
+                    <mat-option value="remplacement">remplacement</mat-option>
+                    <mat-option  value="allaitement">Allaitement</mat-option>
+                </mat-select>
+            </mat-form-field>
+    <mat-form-field class="example-full-width">
+            <mat-label>Nombre de jours</mat-label>
+            <input matInput   [(ngModel)]="absence.nombrejours">
+    </mat-form-field>
+    <br>
+    <input matInput  disabled  [(ngModel)]="
+        </div>
+            <div style="position: relative;left: 40%;" *ngIf="absence.nombrejours<1">
+                <small class="text-danger">
+                    nombre de jour invalide
+                </small>
+
+            </div>
+            <div *ngIf="absence.type=='Congé'" >
+                <div  class="form-check" [(ngModel)]="absence.typeConge">
+                    <mat-radio-button style="margin-right: 30px">Congé exceptionnel</mat-radio-button>
+                    <mat-radio-button style="margin-right: 30px">Congé régulier</mat-radio-button>
+                    <mat-radio-button >Congé maladie </mat-radio-button>
+                </div>
+            </div>
+
+            <div *ngIf="absence.type=='absence autorisée'">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Motif</mat-label>
+                    <input matInput [(ngModel)]="absence.motif">
+                </mat-form-field>
+            </div>
+            <br>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Interim</mat-label>
+                <input matInput [(ngModel)]="absence.interim">
+            </mat-form-field>
+            <div></div>
+            <label>Premier jour:</label>
+            <input type="date" class="form-control" [(ngModel)]="absence.firstDay">
+            <div *ngIf="absence.firstDay>absence.lastDay || absence.firstDay>absence.reprise">
+                <small class="text-danger" *ngIf="absence.firstDay>absence.lastDay">La date du premier jour doit être antérieure à la date du dernier jour <br> </small>
+                <small class="text-danger" *ngIf="absence.firstDay>absence.reprise">La date du premier jour doit être antérieur à la date de reprise <br> </small>
+            </div>
+
+            <label>Dernier jour :</label>
+            <input type="date" class="form-control" [(ngModel)]="absence.lastDay">
+            <div *ngIf="absence.firstDay>absence.lastDay || absence.lastDay>absence.reprise">
+                <small class="text-danger" *ngIf="absence.firstDay>absence.lastDay">La date du dernier jour doit être postérieure à la date du premier jour <br></small>
+                <small class="text-danger" *ngIf="absence.lastDay>absence.reprise">La date du dernier jour doit être antérieur à la date de reprise <br></small>
+            </div>
+            <label>Date de reprise:</label>
+            <input type="date" class="form-control" [(ngModel)]="absence.reprise">
+            <div *ngIf="absence.firstDay>absence.reprise || absence.lastDay>absence.reprise">
+                <small class="text-danger" *ngIf="absence.firstDay>absence.reprise">La date de reprise doit être postérieure à la date du premier jour <br></small>
+                <small class="text-danger" *ngIf="absence.lastDay>absence.reprise">La date de reprise jour doit être postérieur às la date de dernier jour <br></small>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="card-footer" >
+        <button style="background-color:#5DADE2;margin-right:20px;width: 70%;height:50%;color: whitesmoke;border-color: whitesmoke;"  class="btn btn-block btn-outline-primary"   (click)="saveBr()">Sauvegarder comme brouillon</button>
+        <button style="background-color: #66bb6a;color: whitesmoke;width: 70%;border-color: whitesmoke;"  class="btn btn-block btn-outline-primary"  (click)="save()">Envoyer</button>
+
+    </div>
+
+
+
+</div>
