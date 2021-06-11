@@ -6,12 +6,17 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         MatButtonModule,
+        MatIconModule,
+        _MatMenuDirectivesModule,
+        MatMenuModule,
     ],
   declarations: [
     FooterComponent,

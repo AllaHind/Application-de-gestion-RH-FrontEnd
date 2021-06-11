@@ -1,7 +1,8 @@
 import {Employe} from './employe.model';
+import {User} from './user.model';
 
 export class DemandeAbsence {
-    // @ts-ignore
+
 
     public   id: number;
 
@@ -27,7 +28,9 @@ export class DemandeAbsence {
     // @ts-ignore
     public reprise:string;
 
-    public currentuser:any
+    public user = new User();
+
+
 
 }
 

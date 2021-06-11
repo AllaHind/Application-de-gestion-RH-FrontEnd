@@ -3,75 +3,97 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Demandes des employés</h4>
+
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title"><b>Demandes des employés</b></h4>
 
                     </div>
-            <mat-tab-group>
-                <mat-tab  label="Demande absence">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                        <th> Type d'absence</th>
-                        <th>Motif</th>
-                        <th>Nombre de jours</th>
-                        <th>Premier jour</th>
-                        <th>Dernier Jour </th>
-                        <th>Date de reprise</th>
-                        <th>Interim</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                        </thead>
-                        <tbody>
+                    <mat-tab-group>
+                        <mat-tab label="Demande absence">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                <th>Matricule</th>
+                                <th>Nom Complet</th>
+                                <th> Type d'absence</th>
+                                <th>Motif</th>
+                                <th>Nombre de jours</th>
+                                <th>Premier jour</th>
+                                <th>Dernier Jour</th>
+                                <th>Date de reprise</th>
+                                <th>Interim</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                </thead>
+                                <tbody>
 
-                        <tr *ngFor="let a of absences | paginate : {id:'listing' , itemsPerPage:6,currentPage:demandeAbsenceService.page,totalItems:demandeAbsenceService.totalRecords } ;  index as i">
-                            <td>{{a.type}}</td>
-                            <td>
-                                <ng-container *ngIf="a.motif==null">---</ng-container>
-                                <ng-container>{{a.motif}}</ng-container>
-                            </td>
-                            <td style="text-align: center">{{a.nombrejours}}</td>
-                            <td>{{a.firstDay}}</td>
-                            <td>{{a.lastDay}}</td>
-                            <td>{{a.reprise}}</td>
-                            <td>{{a.interim}}</td>
-                            <td>{{a.status}}</td>
+                                <tr *ngFor="let a of absences | paginate : {id:'listing' , itemsPerPage:6,currentPage:demandeAbsenceService.page,totalItems:demandeAbsenceService.totalRecords } ;  index as i">
+                                    <td>{{a.user.matricule}}</td>
+                                    <td>{{a.user.fullname}}</td>
+                                    <td>{{a.type}}</td>
+                                    <td>
+                                        <ng-container *ngIf="a.motif==null">---</ng-container>
+                                        <ng-container>{{a.motif}}</ng-container>
+                                    </td>
+                                    <td style="text-align: center">{{a.nombrejours}}</td>
+                                    <td>{{a.firstDay}}</td>
+                                    <td>{{a.lastDay}}</td>
+                                    <td>{{a.reprise}}</td>
+                                    <td>{{a.interim}}</td>
+                                    <td>{{a.status}}</td>
 
-                            <td><span> <button  class="fa  btn " style="background-color: #82E0AA" (click)="accepter(a)" [disabled]="a.status=='acceptée'|| a.status=='refusée'"><mat-icon>done</mat-icon></button></span>
-                                <span > <button class="fa  btn " style="background-color:#EC7063 " (click)="refuser(a)" [disabled]="a.status=='acceptée'|| a.status=='refusée'"><mat-icon>close</mat-icon></button></span></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div>
-                        <pagination-controls id="listing" maxSize="5" directionLinks="true" (pageChange)="demandeAbsenceService.page=$event"></pagination-controls>
-                    </div>
-                </mat-tab>
-                <mat-tab label="Demande document">
-                    <table class="table table-hover table-striped">
+                                    <td><span> <button class="fa  btn " style="background-color: #82E0AA"
+                                                       (click)="accepter(a)"
+                                                       [disabled]="a.status=='Approuvée'|| a.status=='Rejetée'"><mat-icon>done</mat-icon></button></span>
+                                        <span> <button class="fa  btn " style="background-color:#EC7063 "
+                                                       (click)="refuser(a)"
+                                                       [disabled]="a.status=='Approuvée'|| a.status=='Rejetée'"><mat-icon>close</mat-icon></button></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <pagination-controls id="listing" maxSize="5" directionLinks="true"
+                                                     (pageChange)="demandeAbsenceService.page=$event"></pagination-controls>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Demande document">
+                            <button style="position: relative;left: 20px;top:10px" mat-fab color="primary" (click)="add()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                            <br>
+                            <br>
 
-                        <thead>
+                            <table class="table table-hover table-striped">
 
-                        <th>Libelle</th>
-                        <th>Date de demande</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                                <thead>
+                                <th>Matricule</th>
+                                <th>Nom Complet</th>
+                                <th>Libelle</th>
+                                <th>Date de demande</th>
+                                <th>Status</th>
+                                <th>Action</th>
 
-                        </thead>
+                                </thead>
 
-                        <tbody>
-                        <tr *ngFor="let d of documents  | paginate : {id:'listDoc' , itemsPerPage:6,currentPage:documentService.page,totalItems:documentService.totalRecords } ; index as i">
-                            <td>{{d.libelle}}</td>
-                            <td>{{d.dateDemande}}</td>
-                            <td>{{d.status}}</td>
-                            <td><span> <button  class="fa  btn " style="background-color: #82E0AA " (click)="documentPret(d)"><mat-icon>done</mat-icon></button></span>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div>
-                        <pagination-controls id="listDoc" maxSize="5" directionLinks="true" (pageChange)="documentService.page=$event"></pagination-controls>
-                    </div>
-                </mat-tab>
-            </mat-tab-group>
-    </div>
+                                <tbody>
+                                <tr *ngFor="let d of documents  | paginate : {id:'listDoc' , itemsPerPage:6,currentPage:documentService.page,totalItems:documentService.totalRecords } ; index as i">
+                                    <td>{{d.user.matricule}}</td>
+                                    <td>{{d.user.fullname}}</td>
+                                    <td>{{d.libelle}}</td>
+                                    <td>{{d.dateDemande}}</td>
+                                    <td>{{d.status}}</td>
+                                    <td><span> <button class="fa  btn " style="background-color: #82E0AA "
+                                                       (click)="documentPret(d)"><mat-icon>done</mat-icon></button></span>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <pagination-controls id="listDoc" maxSize="5" directionLinks="true"
+                                                     (pageChange)="documentService.page=$event"></pagination-controls>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
             </div>
         </div>
     </div>

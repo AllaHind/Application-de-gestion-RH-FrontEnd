@@ -1,84 +1,80 @@
-
-        <html>
-
-        <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Untitled</title>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-            <link rel="stylesheet" href="assets/css/style.css">
-        </head>
-
-
-        <body>
-        <div class="login-dark">
-            <form *ngIf="!isLoggedIn"
-                  name="form"
-                  (ngSubmit)="f.form.valid && onSubmit()"
-                  #f="ngForm"
-                  novalidate>
-                <h2 class="sr-only">Login Form</h2>
-                <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
-
-                    <div class="form-group">       <div class="form-outline mb-4">
-                        <label for="username">Username</label>
-                        <input
-                                type="text"
-                                class="form-control"
-                                name="username"
-                                [(ngModel)]="form.username"
-                                required
-                                #username="ngModel"
-                        />
-                        <div
-                                class="alert alert-danger"
-                                role="alert"
-                                *ngIf="f.submitted && username.invalid"
-                        >
-                            Username is required!
-                        </div>
-                    </div>
+<div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+    <div class="card card0 border-0">
+        <div class="row d-flex">
+            <div class="col-lg-6">
+                <div class="card1 pb-5">
+                    <div class="row"> <img> </div>
+                    <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> <img src="/assets/onda.png" class="image" style="position:relative;top: 60px" >  </div>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input
-                            type="password"
-                            class="form-control"
-                            name="password"
-                            [(ngModel)]="form.password"
-                            required
-                            minlength="6"
-                            #password="ngModel"
-                    />
+            </div>
+            <div class="col-lg-6">
+                <div class="px-4 py-5">
+
+                    </div>
+                <form
+                        *ngIf="!isLoggedIn"
+                        name="form"
+                        (ngSubmit)="f.form.valid && onSubmit()"
+                        #f="ngForm"
+                        novalidate
+                >
+                    <div class="row px-3" style="width: 600px"> <label for="username" class="mb-1">
+                        <h6 class="mb-0 text-sm">Username</h6>
+                    </label> <input class="mb-4"   type="text"
+                                    class="form-control"
+                                    name="username"
+                                    [(ngModel)]="form.username"
+                                    required
+                                    #username="ngModel" > </div>
                     <div
-                            class="alert alert-danger"
+                            style="color: red"
+                            role="alert"
+                            *ngIf="f.submitted && username.invalid"
+                    >
+                        Username requis!
+                    </div>
+                    <br>
+                    <div class="row px-3" style="width: 600px"> <label class="mb-1" for="password">
+                        <h6 class="mb-0 text-sm">Password</h6>
+                    </label> <input type="password"
+                                    class="form-control"
+                                    name="password"
+                                    [(ngModel)]="form.password"
+                                    required
+                                    minlength="6"
+                                    #password="ngModel">
+                    <div style="color: red"
                             role="alert"
                             *ngIf="f.submitted && password.invalid"
                     >
-                        <div *ngIf="password.errors.required">Password is required</div>
+                        <div *ngIf="password.errors.required">Mot de passe requis!</div>
                         <div *ngIf="password.errors.minlength">
-                            le mot de passe doit contenir au moins 6 caractères
+                            le mot de passe  doit contenir au moins 6 caractères!
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-block">
-                        Login
-                    </button>
-                    <div class="alert alert-success" *ngIf="isLoggedIn">
-                        Logged in as {{ roles }}.
                     </div>
-                    <div class="nav-item" *ngIf="isLoggedIn">
-                        <a href class="nav-link" (click)="logout()">LogOut</a>
+                    <div class="form-group">
+                        <div
+                                style="color: red"
+                                role="alert"
+                                *ngIf="f.submitted && isLoginFailed && form.username!=null && form.password!=null"
+                        >
+                            Echec de connexion: {{ errorMessage }}
+                        </div>
                     </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+                    <br>
+                    <div class="row px-3 mb-4">
+                        <div class="custom-control custom-checkbox custom-control-inline"> <input id="chk1" type="checkbox" name="chk" class="custom-control-input"> <label for="chk1" class="custom-control-label text-sm">Remember me</label> </div> <a href="#" class="ml-auto mb-0 text-sm" style="position: relative;right: 50px">Mot de passe oublié?</a>
+                    </div>
+                    <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center">Login</button> </div>
 
+                    <div class="row mb-4 px-3"> <small class="font-weight-bold">Vous n'avez pas de compte? <a class="text-danger"  (click)=" register() " >S'inscrire</a></small> </div>
 
-
-                </div>
-            </form>
+                </form>
+            </div>
+            </div>
         </div>
-        </body>
-
+        <div class="bg-blue py-4">
+            <div class="row px-3"> <small class="ml-4 ml-sm-5 mb-2">ONDA &copy; 2021. All rights reserved.</small></div>
+            </div>
+        </div>

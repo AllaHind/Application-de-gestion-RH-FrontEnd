@@ -1,0 +1,226 @@
+
+
+    <div class="card-body" >
+        <button style="position: relative;left: 700px;" (click)="onClose()" mat-icon-button class="close-button" [mat-dialog-close]="false"> <mat-icon class="close-icon" color="warn">close</mat-icon></button>
+
+<form class="form-signin"  *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate>
+<mat-grid-list cols="1" style="position: relative" rowHeight="500px">
+    <mat-grid-tile>
+
+        <div class="controles-container">
+            <h4><b><u>Donnée Administrative</u></b></h4>
+            <div  class="form-label-group">
+            <mat-form-field style="margin-right: 60px" >
+
+                <input  type="text"  matInput placeholder="Full Name*"  class="form-control"
+                        name="fullname"
+                        [(ngModel)]="form.fullname"
+
+                        minlength="3"
+                        maxlength="20"
+                        #fullname="ngModel">
+
+
+            </mat-form-field>
+            </div>
+            <div  class="form-label-group">
+            <mat-form-field style="margin-right: 60px" >
+                <input  type="text"  matInput placeholder="Matricule*"  class="form-control"
+                        name="matricule"
+                        [(ngModel)]="form.matricule"
+
+                        minlength="3"
+                        maxlength="20"
+                        #matricule="ngModel">
+
+            </mat-form-field>
+            </div>
+            <div  class="form-label-group">
+            <mat-form-field style="margin-right: 60px" >
+                <input type="date"   matInput placeholder="Date naissance*"  class="form-control"
+                       name="date_naissance"
+                       [(ngModel)]="form.date_naissance"
+
+                       minlength="3"
+                       maxlength="20"
+                       #date_naissance="ngModel">
+            </mat-form-field>
+            </div>
+            <div  class="form-label-group">
+            <mat-form-field style="margin-right: 60px"  >
+                    <mat-label>Emploi</mat-label>
+                    <mat-select style="width: 400px"  matNativeControl required  [(ngModel)]="form.emmploi" name="emmploi"  #emmploi="ngModel" >
+                        <mat-option  value="Contrôleur de la circulation aériennne">Contrôleur de la circulation aériennne </mat-option>
+                        <mat-option value="Electronicien de la sécurité aérienne">Electronicien de la sécurité aérienne</mat-option>
+                        <mat-option value="Technicien ">Technicien</mat-option>
+                        <mat-option  value="Mécanicien">Mécanicien</mat-option>
+                        <mat-option  value="Responsable du service qualité">Responsable du service qualité</mat-option>
+                        <mat-option  value="Responsable du service exploitation">Responsable du service exploitation </mat-option>
+                        <mat-option  value="Responsable du service technique">Responsable du service technique </mat-option>
+                        <mat-option  value="Responsable du service Sécurité Aérienne">Responsable du service Sécurité Aérienne </mat-option>
+                        <mat-option  value="Responsable du service Sureté aérienne">Responsable du service Sureté aérienne  </mat-option>
+                        <mat-option  value="Responsable du service Ressource Humaine">Responsable du service Ressource Humaine </mat-option>
+                        <mat-option  value="Responsable du service  comptablité">Responsable du service comptablité </mat-option>
+                        <mat-option  value="Responsable du service  Statistique">Responsable du service Statistique  </mat-option>
+                        <mat-option  value="Chef de division 'navigation aérienne'">Chef de division 'navigation aérienne' </mat-option>
+                        <mat-option  value="Chef de division 'éléctronique de la sécurité aérienne'">Chef de division 'éléctronique de la sécurité aérienne'</mat-option>
+                        <mat-option  value="	Chef de division 'exploitation'">Chef de division 'exploitation'</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+            </div>
+            <div  class="form-label-group">
+            <mat-form-field style="margin-right: 60px" >
+                <input  type="date"  matInput placeholder="Date d'embauche*"
+                        name="dateEmbauche"
+                        [(ngModel)]="form.dateEmbauche"
+                        class="form-control"
+                        #dateEmbauche="ngModel">
+
+            </mat-form-field>
+            </div>
+
+
+        </div>
+
+        <div class="controles-container">
+            <div style="margin-top: 30px"></div>
+            <div  class="form-label-group">
+            <mat-form-field style="margin-right: 60px">
+                <input    type="text" matInput placeholder="Echelle*"
+                          name="echelle"
+                          [(ngModel)]="form.echelle"
+                          class="form-control"
+                          minlength="3"
+                          maxlength="20"
+                          #echelle="ngModel">
+
+            </mat-form-field>
+            </div>
+            <div  class="form-label-group">
+            <mat-form-field style="margin-right: 60px">
+                <input type="date"  matInput placeholder="Date echelle*"
+                       name="datechelle"
+                       [(ngModel)]="form.datechelle"
+                       class="form-control"
+                       #datechelle="ngModel">
+
+            </mat-form-field>
+            </div>
+            <div  class="form-label-group">
+            <mat-form-field style="margin-right: 60px">
+                <input type="text"  matInput placeholder="echelon*"   name="echelon"
+                       [(ngModel)]="form.echelon"
+                       class="form-control"
+                       #echelon="ngModel" >
+
+            </mat-form-field>
+            </div>
+            <div  class="form-label-group">
+            <mat-form-field style="margin-right: 60px">
+                <input  type="date"  matInput placeholder="date echelon*" name="datechelon"
+                        [(ngModel)]="form.datechelon"
+                        class="form-control"
+                        minlength="3"
+                        maxlength="20"
+                        #datechelon="ngModel">
+
+            </mat-form-field>
+            </div>
+            <div  class="form-label-group">
+            <mat-form-field style="margin-right: 60px">
+                <input  type="text"  matInput placeholder="Unité organisationnelle*" name="uniteOrgani"
+                        [(ngModel)]="form.uniteOrgani"
+                        class="form-control"
+                        minlength="3"
+                        maxlength="20"
+                        #uniteOrgani="ngModel" >
+
+            </mat-form-field>
+            </div>
+        </div>
+        <div class="controles-container" style="margin-bottom: 80px">
+            <h4><b><u>Donnée Compte</u></b></h4>
+            <div  class="form-label-group">
+            <mat-form-field>
+                <input type="text"  matInput placeholder="Nom'utilisateur*"   name="username"
+                       [(ngModel)]="form.username"
+                       class="form-control"
+                       minlength="3"
+                       maxlength="20"
+                       #username="ngModel">
+                <div style="color: red;font-size: small" *ngIf="f.submitted && username.invalid">
+                    <div *ngIf="username.errors.required">Nom d'utilisateur requis!</div>
+                    <div *ngIf="username.errors.minlength">
+                        Le nom d'utilisateur doit comporter au moins 3 caractères.
+                    </div>
+                    <div *ngIf="username.errors.maxlength">
+                        Le nom d'utilisateur ne doit pas dépasser 20 caractères.
+                    </div>
+                </div>
+
+            </mat-form-field>
+            </div>
+            <div  class="form-label-group">
+            <mat-form-field>
+                <input type="email"  matInput placeholder="Email*"
+                       name="email"
+                       [(ngModel)]="form.email"
+                       class="form-control"
+                       email
+                       #email="ngModel" class="form-control">
+                <div  style="color: red;font-size: small" *ngIf="f.submitted && email.invalid">
+                    <div *ngIf="email.errors.required">Email requis!</div>
+                    <div *ngIf="email.errors.email">
+                        L'e-mail doit être une adresse e-mail valide.
+                    </div>
+                </div>
+            </mat-form-field>
+
+            </div>
+
+            <div  class="form-label-group">
+            <mat-form-field>
+                <input  type="password"  matInput placeholder="Mot de passe *"
+                        class="form-control"
+                        name="password"
+                        [(ngModel)]="form.password"
+
+                        minlength="6"
+                        #password="ngModel" type="password"  class="form-control" placeholder="Mot de passe" >
+                <div style="color: red;font-size: small" *ngIf="f.submitted && password.invalid">
+                    <div *ngIf="password.errors.required">Mot de passe requis</div>
+                    <div *ngIf="password.errors.minlength">
+                        Le mot de passe doit contenir au moins 6 caractères.
+                    </div>
+                </div>
+            </mat-form-field>
+            </div>
+            <div  class="form-label-group">
+            <mat-form-field>
+                <input  type="password"  class="form-control"  matInput placeholder="Confirmer mot de passe*" [(ngModel)]="form.password2"  class="form-control" name="password2" >
+
+            </mat-form-field>
+            </div>
+        </div>
+
+    </mat-grid-tile>
+</mat-grid-list>
+    <div style="color: red" *ngIf="f.submitted && isSignUpFailed" >
+        Connexion échouée!{{ errorMessage }}
+    </div>
+    <div class="button-row" style="margin-left: 600px">
+        <button mat-raised-button color="primary"  [disabled]="form.invalid" style="margin-right:5px "  type="submit">Submit</button>
+    </div>
+</form>
+
+        <div class="alert alert-success" *ngIf="isSuccessful">
+           Employé ajouté avec succès!</div>
+    </div>
+
+

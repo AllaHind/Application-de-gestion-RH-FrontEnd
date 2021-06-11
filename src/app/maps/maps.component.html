@@ -1,1 +1,55 @@
-<div id="map"></div>
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card">
+
+
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">Employés</h4>
+                    </div>
+                    <button style="position: relative;left: 20px;top:10px" mat-fab color="primary" (click)="add()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <div class="card-body">
+
+                        <table class="table table-hover table-striped">
+
+                            <thead>
+
+                            <th>Matricule</th>
+                            <th>Nom Complet</th>
+                            <th>Emploi </th>
+                            <th>Date d'embauche </th>
+                            <th>Email </th>
+                            <th>Action</th>
+
+
+                            </thead>
+                            <tbody>
+                            <tr>
+                            <tr *ngFor="let u of users; index as i ">
+
+                                <td>{{u.matricule}}</td>
+                                <td>{{u.fullname}}</td>
+                                <td>{{u.emmploi}}</td>
+                                <td>{{u.dateEmbauche}}</td>
+                                <td>{{u.email}}</td>
+                                <td>
+                                      <button mat-fab color="warn"(click)="delete(u,i)"> <mat-icon>delete</mat-icon></button></td>
+
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

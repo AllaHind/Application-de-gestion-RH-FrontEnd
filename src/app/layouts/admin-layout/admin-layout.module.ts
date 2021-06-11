@@ -21,6 +21,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {MatTableModule} from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     imports: [
@@ -38,6 +40,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
         MatTabsModule,
         MatPaginatorModule,
         NgxPaginationModule,
+        MatTableModule,
+        MatDialogModule,
     ],
   declarations: [
     DashboardComponent,

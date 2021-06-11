@@ -1,73 +1,95 @@
 
 <div class="main-content">
     <div class="container-fluid">
-        <div class="card">
+        <div class="row">
+            <div class="col-md-15">
 
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Mes documents</h4>
 
+                <div class="card" style="width: 200%;">
+
+                    <div class="card-header card-header-info">
+
+                        <h4 class="card-title">Documents</h4>
                     </div>
                     <mat-tab-group>
-                        <mat-tab  label="Document">
+                        <mat-tab label="Demandes Documents">
+                    <button style="position: relative;left: 20px;top:10px" mat-fab color="primary" (click)="add()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <div class="card-body">
 
-                            <mat-form-field appearance="fill" >
-                                <mat-label>Libellé</mat-label>
-                                <mat-select matNativeControl required [(ngModel)]=document.libelle >
-                                    <mat-option  value="Attestation de travail">Attestation de travail</mat-option>
-                                    <mat-option value="Attestation de salaire">Attestation de salaire</mat-option>
-                                    <mat-option value="Bulletin de paie">Bulletin de paie</mat-option>
-                                    <mat-option  value="Carte professionnelle">Carte professionnelle</mat-option>
-                                    <mat-option  value="Carte RCAR">Carte RCAR</mat-option>
-                                    <mat-option  value="Carte Cnops">Carte Cnops</mat-option>
-                                </mat-select>
+                        <table class="table table-hover table-striped">
 
-                            </mat-form-field>
-                            <div >
+                            <thead>
 
-                            <button mat-raised-button color="primary" [disabled]="document.libelle==null" (click)="save()">Demander</button>
-</div>
-
-
-                            <br>
-                            <br>
-                        </mat-tab>
-                        <mat-tab label="Historique de mes documents">
-                            <table class="table table-hover table-striped">
-
-                                                        <thead>
-
-                                                        <th>Libelle</th>
-                                                        <th>Date de demande</th>
-                                                        <th>Status</th>
-                                                        <th>Action</th>
-
-                                                        </thead>
-
+                            <th>Libellé</th>
+                            <th>Date de demande</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                            </thead>
                             <tbody>
                             <tr>
-                            <tr *ngFor="let d of documents | paginate : {id:'listDoc' , itemsPerPage:6,currentPage:documentService.page,totalItems:documentService.totalRecords } ; index as i">
+                            <tr *ngFor="let d of documents | paginate : {id:'listing' , itemsPerPage:6,currentPage:documentService.page,totalItems:documentService.totalRecords } ; index as i ">
+
                                 <td>{{d.libelle}}</td>
                                 <td>{{d.dateDemande}}</td>
                                 <td>{{d.status}}</td>
-                                <td>    <button mat-raised-button  color="primary" [disabled]="d.status=='En cours'"  mat-fab  style="margin-right: 10px" (click)="exportTermePdf()"><mat-icon>file_download</mat-icon></button>
-                                 <ng-container><span>    <button (click)="delete(d,i)" [disabled]="d.status=='En cours'" mat-fab color="warn" aria-label="Example icon button with a delete icon">
-
-                        <mat-icon>delete</mat-icon>
+                                <td>  <ng-container><span><button style="margin-right: 10px;background-color: #F5B041"   [disabled]="d.status!='prêt'"  (click)="exportTermePdf()" mat-fab color="primary">
+                        <mat-icon>download</mat-icon>
                     </button></span>
                                 </ng-container>
+
+                                    <ng-container><span>    <button [disabled]="d.status!='prêt'"   (click)="delete(d,i)" mat-fab color="warn" aria-label="Example icon button with a delete icon">
+                        <mat-icon>delete</mat-icon>
+                    </button></span>
+                                    </ng-container>
+
                                 </td>
                             </tr>
+
                             </tbody>
-                            </table>
-                            <div>
-                                <pagination-controls id="listDoc" maxSize="5" directionLinks="true" (pageChange)="documentService.page=$event"></pagination-controls>
-                            </div>
+
+                        </table>
+                        <div>
+                            <pagination-controls id="listing" maxSize="5" directionLinks="true" (pageChange)="documentService.page=$event"></pagination-controls>
+                        </div>
+                    </div>
                         </mat-tab>
+
+
+                        <mat-tab label="Documents reçus">
+
+
+                            <div class="card-body">
+
+                                <table class="table table-hover table-striped">
+
+                                    <thead>
+
+                                    <th>Libellé</th>
+                                    <th>Date de récéption</th>
+                                    <th>Action</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr
+                                    *ngFor="let file of fileInfos | async">
+                                   <td>{{ file.name }}</td>
+                                        <td>{{file.dateEnvoie}}</td>
+
+                                        <td> <button mat-fab color="primary"  style="margin-right: 10px" (click)="downloadFile(file)"><mat-icon>download</mat-icon></button>
+
+                                       <button mat-fab color="primary" style="background-color: #F2C010" (click)="lire(file)"><mat-icon>visibility</mat-icon></button></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+
+                        </mat-tab>
+
                     </mat-tab-group>
-
-
+                </div>
             </div>
-
         </div>
+    </div>
 </div>
 

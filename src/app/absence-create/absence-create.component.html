@@ -1,9 +1,10 @@
+<button style="position: relative;left: 740px;" (click)="onClose()" mat-icon-button class="close-button" [mat-dialog-close]="false"> <mat-icon class="close-icon" color="warn">close</mat-icon></button>
 
 <div class="card">
 
 
+
     <div class="card-body" >
-        <button style="position:relative;left:670px" (click)="onClose()" tabindex="-1" class="btn-dialog-close" mat-stroked-button ><mat-icon>clear</mat-icon></button>
         <div class="form-group">
 <div class="row">
             <mat-form-field appearance="fill" style="margin-right: 100px">
@@ -15,12 +16,13 @@
                     <mat-option  value="allaitement">Allaitement</mat-option>
                 </mat-select>
             </mat-form-field>
+
     <mat-form-field class="example-full-width">
             <mat-label>Nombre de jours</mat-label>
             <input matInput   [(ngModel)]="absence.nombrejours">
     </mat-form-field>
     <br>
-    <input matInput  disabled  [(ngModel)]="
+
         </div>
             <div style="position: relative;left: 40%;" *ngIf="absence.nombrejours<1">
                 <small class="text-danger">
@@ -46,7 +48,10 @@
 
             <mat-form-field class="example-full-width">
                 <mat-label>Interim</mat-label>
-                <input matInput [(ngModel)]="absence.interim">
+                <mat-select matNativeControl required [(ngModel)]=absence.interim >
+                    <mat-option *ngFor="let e of equipes" value="{{e.name}}">{{e.name}}</mat-option>
+                </mat-select>
+
             </mat-form-field>
             <div></div>
             <label>Premier jour:</label>
@@ -74,8 +79,8 @@
     </div>
 
     <div class="card-footer" >
-        <button style="background-color:#5DADE2;margin-right:20px;width: 70%;height:50%;color: whitesmoke;border-color: whitesmoke;"  class="btn btn-block btn-outline-primary"   (click)="saveBr()">Sauvegarder comme brouillon</button>
-        <button style="background-color: #66bb6a;color: whitesmoke;width: 70%;border-color: whitesmoke;"  class="btn btn-block btn-outline-primary"  (click)="save()">Envoyer</button>
+        <button [disabled]="absence.firstDay>absence.lastDay || absence.lastDay>absence.reprise || absence.firstDay>absence.reprise || absence.nombrejours==null||absence.type==null||absence.firstDay==null||absence.lastDay==null||absence.reprise==null"  style="background-color:#5DADE2;margin-right:20px;width: 70%;height:50%;color: whitesmoke;border-color: whitesmoke;"  class="btn btn-block btn-outline-primary"  (click)="showNotification('top','right','Demande d\'absence sauvegardée comme brouillon','info')" (click)="saveBr()">Sauvegarder comme brouillon</button>
+        <button  [disabled]="absence.firstDay>absence.lastDay || absence.lastDay>absence.reprise || absence.firstDay>absence.reprise || absence.nombrejours==null||absence.type==null||absence.firstDay==null||absence.lastDay==null||absence.reprise==null" style="background-color: #66bb6a;color: whitesmoke;width: 70%;border-color: whitesmoke;"  class="btn btn-block btn-outline-primary" (click)="showNotification('top','right','Demande d\'absence envoyée','success')" (click)="save()">Envoyer</button>
 
     </div>
 

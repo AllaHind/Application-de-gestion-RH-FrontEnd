@@ -4,6 +4,7 @@ import {Document} from '../model/document.model';
 import {HttpClient} from '@angular/common/http';
 import {DemandeAbsence} from '../model/demande-absence.model';
 import {Observable} from 'rxjs';
+import {TokenStorageService} from './token-storage.service';
 
 
 @Injectable({
@@ -41,7 +42,7 @@ export class DocumentService {
     this._documents = value;
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private token: TokenStorageService) { }
   public clone(document: Document) {
 
     const _clone = new Document();
@@ -53,6 +54,7 @@ export class DocumentService {
   }
   public save() {
     if (this.document.id == null) {
+        this.document.user.email = this.token.getUser().email;
       console.log('hh');
       this.http.post<number>('http://localhost:8080/Document-Provided/', this.document).subscribe(
           data => {
@@ -96,7 +98,9 @@ export class DocumentService {
         }
     );
   }
-  public iniit() {
+
+
+ public iniit() {
 
     this.http.get<Array<Document>>('http://localhost:8080/Document-Provided/').subscribe(
         data => {
@@ -113,6 +117,9 @@ export class DocumentService {
 
 
   }
+
+
+
   exportTermePdf():Observable<Blob>
   {
  return  this.http.get("http://localhost:8080/Document-Provided/export/pdf", {responseType:'blob'});
@@ -123,6 +130,24 @@ export class DocumentService {
             data => {
                 console.log('haha');
                 this.documents.splice(index, 1);
+
+            },
+            error => {
+                console.log('erreur')
+
+            }
+        )
+
+
+    }
+    findall() {
+        this.http.get<Array<Document>>('http://localhost:8080/Document-Provided/id/' + this.token.getUser().id).subscribe(
+            data => {
+                console.log('haha')
+
+                this._documents = data;
+                // tslint:disable-next-line:variable-name
+                this.totalRecords = data.length;
 
             },
             error => {

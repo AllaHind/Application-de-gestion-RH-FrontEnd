@@ -7,8 +7,9 @@ import {ConfirmDialogService} from '../controller/service/confirm-dialog.service
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import {UserService} from '../controller/service/user.service';
 
-
+declare var $: any;
 @Component({
   selector: 'app-table-list',
   templateUrl: './table-list.component.html',
@@ -18,8 +19,9 @@ export class TableListComponent implements OnInit {
     listData:MatTableDataSource<any>
   @ViewChild(MatPaginator) paginator:MatPaginator;
 
-  constructor(private demandeAbsenceService: DemandeAbsenceService, private dialog: MatDialog, private confirmDialogService: ConfirmDialogService) {
+  constructor(private demandeAbsenceService: DemandeAbsenceService, private dialog: MatDialog, private confirmDialogService: ConfirmDialogService,private userService:UserService) {
   }
+
 
   get absence(): DemandeAbsence {
     return this.demandeAbsenceService.absence;
@@ -30,7 +32,9 @@ export class TableListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.demandeAbsenceService.init();
+    console.log(this.demandeAbsenceService.findall())
+    this.demandeAbsenceService.findall();
+    this.userService.in();
   }
 
 
@@ -57,15 +61,44 @@ export class TableListComponent implements OnInit {
     this.dialog.open(AbsenceCreateComponent, dialogconfig);
 
   }
+  showNotification(from, align, msg,type){
+
+
+
+
+    $.notify({
+      icon: "notifications",
+      message: msg
+
+    },{
+      type: type,
+      timer: 4000,
+      placement: {
+        from: from,
+        align: align
+      },
+      template: '<div data-notify="container" class="col-xl-4 col-lg-4 col-11 col-sm-4 col-md-4 alert alert-{0} alert-with-icon" role="alert">' +
+          '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+          '<i class="material-icons" data-notify="icon">notifications</i> ' +
+          '<span data-notify="title">{1}</span> ' +
+          '<span data-notify="message">{2}</span>' +
+          '<div class="progress" data-notify="progressbar">' +
+          '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+          '</div>' +
+          '<a href="{3}" target="{4}" data-notify="url"></a>' +
+          '</div>'
+    });
+  }
 
  /* public delete(absence: DemandeAbsence, index: number) {
     return this.demandeAbsenceService.delete(absence, index);
   }*/
-     delete(absence: DemandeAbsence, index: number) {
-       this.confirmDialogService.openConfirmDialog("êtes vous  sure de vouloir supprimer cette demande?").afterClosed().subscribe(res=>{
+     delete(absence:DemandeAbsence, index: number) {
+       this.confirmDialogService.openConfirmDialog('êtes vous  sure de vouloir supprimer cette demande?').afterClosed().subscribe(res=>{
    if(res)
    {
      this.demandeAbsenceService.delete(absence,index);
+     this.showNotification('top','right', 'Demande d\'absence supprimée','danger');
    }
            });
 

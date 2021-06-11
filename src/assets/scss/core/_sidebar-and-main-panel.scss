@@ -303,8 +303,8 @@
         }
     }
 
-    &[data-color="purple"]{
-        @include set-background-color-button($brand-primary);
+    &[data-color="#5499C7"]{
+        @include set-background-color-button(#5499C7);
     }
     &[data-color="azure"]{
         @include set-background-color-button($brand-info);
@@ -327,8 +327,8 @@
         @include sidebar-active-color($black-color);
     }
 
-    &[data-background-color="red"]{
-        @include sidebar-background-color($brand-danger, $white-color);
+    &[data-background-color="blue"]{
+        @include sidebar-background-color($brand-rose, $white-color);
 
         .user,
         .logo,

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import {DemandeAbsence} from '../model/demande-absence.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {TokenStorageService} from './token-storage.service';
+import {Document} from '../model/document.model';
+import {Observable} from 'rxjs';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -9,6 +12,7 @@ const httpOptions = {
         providedIn: 'root'
     })
     export class DemandeAbsenceService {
+
         totalRecords: any;
         page: Number = 1;
         // tslint:disable-next-line:variable-name
@@ -18,9 +22,13 @@ const httpOptions = {
         // tslint:disable-next-line:variable-name
         // @ts-ignore
         private _index: number;
+        private approved: number;
 
-        constructor(private http: HttpClient) {
+        constructor(private http: HttpClient, private token: TokenStorageService) {
         }
+
+
+
 
         get absence(): DemandeAbsence {
             if (this._absence == null) {
@@ -49,6 +57,7 @@ const httpOptions = {
 
             const _clone = new DemandeAbsence();
             _clone.id = demandeAbsence.id;
+
             _clone.type = demandeAbsence.type;
             _clone.firstDay = demandeAbsence.firstDay;
             _clone.lastDay = demandeAbsence.lastDay;
@@ -57,14 +66,20 @@ const httpOptions = {
             _clone.nombrejours = demandeAbsence.nombrejours;
             _clone.motif = demandeAbsence.motif;
             _clone.status = demandeAbsence.status;
+            _clone.user.fullname=demandeAbsence.user.fullname;
+            _clone.user.id=demandeAbsence.user.id;
             return _clone;
         }
 
         // tslint:disable-next-line:typedef
         public save() {
+            console.log(this.token.getUser());
+            console.log(this.token.getUser().email);
             if (this.absence.id == null) {
-                console.log('hh');
-                this.http.post<number>('http://localhost:8036/Demande-absence-Provided/', this.absence).subscribe(
+                this.absence.user.email = this.token.getUser().email;
+                //  this.token.getUser().role
+                console.log(this.absence.user)
+                this.http.post<number>('http://localhost:8080/DemandeAbsenceProvided/', this.absence).subscribe(
                     data => {
 
                         if (data > 0) {
@@ -76,7 +91,7 @@ const httpOptions = {
                     },
                     error => {
 
-                        console.log('erreur');
+                        console.log(error.message);
                     }
                 );
             } else {
@@ -87,6 +102,7 @@ const httpOptions = {
                             this.absences[this._index] = this.clone(this.absence);
 
                         }
+                        this.absence=null;
                     }
                 );
             }
@@ -117,7 +133,7 @@ const httpOptions = {
         }
 
         updaate() {
-            this.http.put<number>('http://localhost:8036/Demande-absence-Provided/', this.absence).subscribe(
+            this.http.put<number>('http://localhost:8080/DemandeAbsenceProvided/', this.absence).subscribe(
                 data => {
                     if (data > 0) {
 
@@ -137,6 +153,7 @@ const httpOptions = {
             this.http.get<Array<DemandeAbsence>>('http://localhost:8080/DemandeAbsenceProvided/all').subscribe(
                 data => {
                     console.log('haha')
+
                     this._absences = data;
                     // tslint:disable-next-line:variable-name
                     this.totalRecords = data.length;
@@ -153,9 +170,9 @@ const httpOptions = {
 
         public delete(absence: DemandeAbsence, index: number) {
 
-            this.http.delete<void>('http://localhost:8036/Demande-absence-Provided/id/' + absence.id).subscribe(
+            this.http.delete<void>('http://localhost:8080/DemandeAbsenceProvided/id/' + absence).subscribe(
                 data => {
-                    console.log('haha');
+
                     this.absences.splice(index, 1);
 
                 },
@@ -167,5 +184,39 @@ const httpOptions = {
 
 
         }
+
+        findall() {
+            this.http.get<Array<DemandeAbsence>>('http://localhost:8080/DemandeAbsenceProvided/id/' + this.token.getUser().id).subscribe(
+                data => {
+                    console.log('haha')
+
+                    this._absences = data;
+                    // tslint:disable-next-line:variable-name
+                    this.totalRecords = data.length;
+                    console.log(this.absences);
+                },
+                error => {
+                    console.log('erreur')
+
+                }
+            )
+
+
+        }
+
+       public absenceApprouvee() : Observable<any>{
+           return  this.http.get<number>('http://localhost:8080/DemandeAbsenceProvided/demande/'+this.token.getUser().id);
+
+       }
+       public absenceRejetee() : Observable<any>{
+           return  this.http.get<number>('http://localhost:8080/DemandeAbsenceProvided/demandeRejete/'+this.token.getUser().id);
+
+       }
+       public absenceEncours() : Observable<any>{
+           return  this.http.get<number>('http://localhost:8080/DemandeAbsenceProvided/demandeEncours/'+this.token.getUser().id);
+
+       }
+
     }
+
 

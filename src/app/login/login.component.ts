@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService} from '../controller/service/auth.service';
 import { TokenStorageService} from '../controller/service/token-storage.service';
 import {Router} from '@angular/router';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {AbsenceCreateComponent} from '../absence-create/absence-create.component';
+import {RegisterComponent} from '../register/register.component';
 
 @Component({
     selector: 'app-login',
@@ -12,10 +15,10 @@ export class LoginComponent implements OnInit {
     form: any = {};
     isLoggedIn = false;
     isLoginFailed = false;
-    errorMessage = '';
+    errorMessage = 'Username ou mot de passe incorrecte';
     roles: string[] = [];
 
-    constructor(private authService: AuthService, private tokenStorage: TokenStorageService,private router: Router) { }
+    constructor(private authService: AuthService, private dialog: MatDialog, private tokenStorage: TokenStorageService,private router: Router) { }
 
     ngOnInit() {
         if (this.tokenStorage.getToken()) {
@@ -37,7 +40,7 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['/dashboard']);
             },
             err => {
-                this.errorMessage = err.error.message;
+                this.errorMessage = 'Username ou mot de passe incorrect ';
                 this.isLoginFailed = true;
             }
         );
@@ -50,6 +53,16 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.signOut();
         window.location.reload();
     }
+    register() {
+
+        const dialogconfig = new MatDialogConfig();
+        dialogconfig.disableClose = true;
+        dialogconfig.autoFocus = true;
+        dialogconfig.width = "40%";
+
+        this.dialog.open(RegisterComponent, dialogconfig);
+    }
+
 }
 
 

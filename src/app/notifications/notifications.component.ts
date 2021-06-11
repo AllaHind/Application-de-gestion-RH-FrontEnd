@@ -1,42 +1,100 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {UploadFileService} from '../controller/service/upload-file.service';
+import {HttpEventType, HttpResponse} from '@angular/common/http';
+import {TokenStorageService} from '../controller/service/token-storage.service';
+import {User} from '../controller/model/user.model';
+import {UserService} from '../controller/service/user.service';
+import {FileDB} from '../controller/model/file-db.model';
+import {MatDialogRef} from '@angular/material/dialog';
+
 declare var $: any;
+
 @Component({
-  selector: 'app-notifications',
-  templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.css']
+    selector: 'app-notifications',
+    templateUrl: './notifications.component.html',
+    styleUrls: ['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit {
 
-  constructor() { }
-  showNotification(from, align){
-      const type = ['','info','success','warning','danger'];
+    selectedFiles: FileList;
+    currentFile: File;
+    progress = 0;
+    message = '';
+matricule:string;
+    fileInfos: Observable<any>;
+    private currentUser: any;
 
-      const color = Math.floor((Math.random() * 4) + 1);
+    private _file = new FileDB();
 
-      $.notify({
-          icon: "notifications",
-          message: "Welcome to <b>Material Dashboard</b> - a beautiful freebie for every web developer."
+    constructor(private uploadService: UploadFileService,public dialogref: MatDialogRef<NotificationsComponent>, private token: TokenStorageService,private  userservice: UserService) {
+    }
 
-      },{
-          type: type[color],
-          timer: 4000,
-          placement: {
-              from: from,
-              align: align
-          },
-          template: '<div data-notify="container" class="col-xl-4 col-lg-4 col-11 col-sm-4 col-md-4 alert alert-{0} alert-with-icon" role="alert">' +
-            '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
-            '<i class="material-icons" data-notify="icon">notifications</i> ' +
-            '<span data-notify="title">{1}</span> ' +
-            '<span data-notify="message">{2}</span>' +
-            '<div class="progress" data-notify="progressbar">' +
-              '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-            '</div>' +
-            '<a href="{3}" target="{4}" data-notify="url"></a>' +
-          '</div>'
-      });
-  }
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.fileInfos = this.uploadService.getFiles();
+        this.currentUser = this.token.getUser();
 
+
+    }
+
+    get users(): Array<User> {
+        return this.userservice.users;
+    }
+
+    selectFile(event) {
+        this.selectedFiles = event.target.files;
+    }
+    get user(): User {
+        return this.userservice.user;
+    }
+    get filedb(): FileDB {
+        if (this._file == null) {
+            this._file = new FileDB();
+        }
+        return this._file;
+    }
+    onClose() {
+        this.dialogref.close();
+    }
+
+    upload() {
+        this.progress = 0;
+
+        this.currentFile = this.selectedFiles.item(0);
+        this.uploadService.upload(this.currentFile, this.filedb.user.matricule).subscribe(
+            event => {
+
+                if (event.type === HttpEventType.UploadProgress) {
+                    console.log(this.filedb.user.matricule)
+                    this.progress = Math.round(100 * event.loaded / event.total);
+                } else if (event instanceof HttpResponse) {
+                    this.message = event.body.message;
+                    this.fileInfos = this.uploadService.getFiles();
+                }
+            },
+            err => {
+                this.progress = 0;
+                this.message = 'Could not upload the file!';
+                this.currentFile = undefined;
+            });
+
+        this.selectedFiles = undefined;
+    }
+
+    downloadFile(file: any) {
+        this.uploadService.getFile(file).subscribe(
+            data => {
+                // tslint:disable-next-line:prefer-const
+                let blob = new Blob([data], {type: file.type})
+                const url = window.URL.createObjectURL(blob)
+                //  const win = window.open(url)
+                const anchor = document.createElement('a')
+                anchor.href = url;
+                anchor.download = file.name;
+                anchor.click()
+            },
+            err => {
+                console.log(err)
+            });
+    }
 }

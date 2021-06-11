@@ -1,126 +1,197 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 <div class="main-content">
-  <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-8">
-              <div class="card">
-                  <div class="card-header card-header-danger" *ngIf="currentUser; else loggedOut">
-                      <h4 class="card-title">Mon profil</h4>
+    <div class="container-fluid">
+        <div class="card">
 
-                  </div>
-                  <div class="card-body" *ngIf="currentUser">
-
-                      <div class="row">
-                          <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                  <mat-label>Nom complet</mat-label>
-                                  <br>
-                                  <input matInput  disabled>{{currentUser.fullname }}
-                              </mat-form-field>
-                          </div>
-                          <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                  <mat-label>Matricule</mat-label>
-                                  <br>
-                                  <input matInput disabled>{{currentUser.matricule}}
-                              </mat-form-field>
-                          </div>
-                          <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                  <mat-label>Date de naissance</mat-label>
-                                  <br>
-                                  <input matInput disabled>{{currentUser.date_naissance}}
-                              </mat-form-field>
-                          </div>
-                      </div>
-                      <div class="row">
-                      <div class="col-md-4">
-                          <mat-form-field class="example-full-width">
-                              <mat-label>Ancienneté</mat-label>
-                              <br>
-                              <input matInput  disabled>{{currentUser.anciennete}}
-                          </mat-form-field>
-                      </div>
-                      <div class="col-md-4">
-                          <mat-form-field class="example-full-width">
-                              <mat-label>Date embauche</mat-label>
-                              <br>
-                              <input matInput disabled>{{currentUser.dateEmbauche}}
-                          </mat-form-field>
-                      </div>
-                          <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                  <mat-label>Unité Organisationel</mat-label>
-                                  <br>
-                                  <input matInput disabled>{{currentUser.uniteOrgani}}
-                              </mat-form-field>
-                          </div>
-                  </div>
-                      <div class="row">
-                          <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                  <mat-label>Echelle</mat-label>
-                                  <br>
-                                  <input matInput  disabled>{{currentUser.echelle}}
-                              </mat-form-field>
-                          </div>
-                          <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                  <mat-label>Echelon</mat-label>
-                                  <br>
-                                  <input matInput disabled>{{currentUser.echelon}}
-                              </mat-form-field>
-                          </div>
-                          <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                  <mat-label>Indice</mat-label>
-                                  <br>
-                                  <input matInput disabled>{{currentUser.indice}}
-                              </mat-form-field>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                  <mat-label>Date echelle</mat-label>
-                                  <br>
-                                  <input matInput  disabled>{{currentUser.datechelle}}
-                              </mat-form-field>
-                          </div>
-                          <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                  <mat-label>Date echellon</mat-label>
-                                  <br>
-                                  <input matInput disabled>{{currentUser.datechelon}}
-                              </mat-form-field>
-                          </div>
-                          <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                  <mat-label>Responsable</mat-label>
-                                  <br>
-                                  <input matInput disabled>{{currentUser.responsable}}
-                              </mat-form-field>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4" *ngIf="currentUser">
-              <div class="card card-profile">
-                  <div class="card-avatar">
-                      <a href="javascript:void(0)">
-                          <img style="width: 100px;height: 100px" src="/assets/img/0-removebg-preview.png"/>
-                      </a>
-                  </div>
-                  <div class="card-body">
-                      <h6 class="card-category text-gray">{{currentUser.fullname}}</h6>
-                      <h4 class="card-title">{{currentUser.nomComplet}}</h4>
-
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-    <ng-template #loggedOut>
-        Veuillez vous connecter
-    </ng-template>
+            <div class="card-header card-header-info">
+                <h3 class="card-title">Profile</h3>
+<div class="container emp-profile">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                    <div class="file btn btn-lg btn-primary">
+                        Changer votre photo
+                        <input type="file" name="file"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <h5>
+                        {{currentUser.fullname}}
+                    </h5>
+                    <h6>
+                        {{currentUser.emploi}}
+                    </h6>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" (click)="edit()"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-work">
+                    <p>WORK LINK</p>
+                    <a href="">Website Link</a><br/>
+                    <a href="">Bootsnipp Profile</a><br/>
+                    <a href="">Bootply Profile</a>
+                    <p>SKILLS</p>
+                    <a href="">Web Designer</a><br/>
+                    <a href="">Web Developer</a><br/>
+                    <a href="">WordPress</a><br/>
+                    <a href="">WooCommerce</a><br/>
+                    <a href="">PHP, .Net</a><br/>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Matricule</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{currentUser.matricule}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Nom Complet</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{currentUser.fullname}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Nom d'utilisateur</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.username}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p >{{user.email}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Date d'embauche</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.dateEmbauche}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Responsable</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.responsable}}</p>
+                            </div>
+                        </div>  <div class="row">
+                            <div class="col-md-6">
+                                <label>Echelle</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.echelle}}</p>
+                            </div>
+                        </div>  <div class="row">
+                            <div class="col-md-6">
+                                <label>Date d'echelle</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.datechelle}}</p>
+                            </div>
+                        </div>  <div class="row">
+                            <div class="col-md-6">
+                                <label>Echelon</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.echelon}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Date echelon</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.datechelon}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Experience</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Expert</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Hourly Rate</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>10$/hr</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Total Projects</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>230</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>English Level</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Expert</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Availability</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>6 months</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Your Bio</label><br/>
+                                <p>Your detail description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+            </div>
+        </div>
+    </div>
 </div>

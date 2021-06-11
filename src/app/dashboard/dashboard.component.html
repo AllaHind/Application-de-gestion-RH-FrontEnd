@@ -1,0 +1,55 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+
+            <div class="card-header card-header-info">
+                <h3 class="card-title">Dashboard</h3>
+
+                        </div>
+            <br>
+            <br>
+            <div class="row" style="margin-left: 20px">
+            <div class="col-md-5">
+            <div class="alert alert-success" style="background-color: #82E0AA">
+
+                <span style="font-size: large">
+
+
+                    <span *ngIf="nbrAbsence>1"> <b style="font-size:50px">{{nbrAbsence}}     </b>Demandes d'absence approuvées </span>
+                         <span *ngIf="nbrAbsence<=1"> <b style="font-size: 50px">{{nbrAbsence}}     </b>  Demande d'absence approuvée </span>
+                </span>
+            </div>
+                    </div>
+                <div class="col-md-5">
+                    <div class="alert alert-danger" style="background-color: #EC7063">
+
+                <span style="font-size: large">
+
+
+                    <span *ngIf="nbrAbsenceRejete>1"> <b style="font-size:50px">{{nbrAbsenceRejete}}     </b>Demandes d'absence rejetées </span>
+                         <span *ngIf="nbrAbsenceRejete<=1"> <b style="font-size: 50px">{{nbrAbsenceRejete}}     </b>  Demande d'absence rejetée </span>
+                </span>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row" style="margin-left: 20px">
+                <div class="col-md-5">
+                    <div class="alert alert-warning" style="background-color: #F5B041">
+
+                <span style="font-size: large">
+
+
+                    <span *ngIf="nbrAbsenceEncours>1"> <b style="font-size:50px">{{nbrAbsenceEncours}}     </b>Demandes d'absence en attente </span>
+                         <span *ngIf="nbrAbsenceEncours<=1"> <b style="font-size: 50px">{{nbrAbsenceEncours}}     </b>  Demande d'absence en attente </span>
+                </span>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+</div>
+
+
+</div>

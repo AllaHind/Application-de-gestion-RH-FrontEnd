@@ -1,0 +1,179 @@
+<html>
+<div class="container register" style="background-size: cover">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+            <h2>RH SPACE</h2>
+
+        </div>
+        <div class="col-md-9 register-right">
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Connexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Inscription</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading">Se connecter</h3>
+                    <form class="row register-form"   *ngIf="!isLoggedIn"
+                          name="form"
+                          (ngSubmit)="f.form.valid && onSubmit2()"
+                          #f="ngForm"
+                          novalidate >
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input  type="text" class="form-control" placeholder="Username *" value=""
+                                       name="username"
+                                       [(ngModel)]="form.username"
+                                       required
+                                       #username="ngModel" />
+                                <div
+                                        style="color: red"
+
+                                        role="alert"
+                                        *ngIf="f.submitted && username.invalid"
+                                >
+                                    <br>
+                                    Username requis!
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input   type="password" class="form-control" placeholder="Password *" value=""
+                                       name="password"
+                                       [(ngModel)]="form.password"
+                                       required
+                                       minlength="6"
+                                       #password="ngModel" />
+                                <div
+style="color: red"
+                                        role="alert"
+                                        *ngIf="f.submitted && password.invalid"
+                                >
+                                    <br>
+                                    <div *ngIf="password.errors.required">Mot de passe requis!</div>
+                                    <div *ngIf="password.errors.minlength">
+                                        Le mot de passe doit contenir au moins 6 caratères
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            <div
+                                    style="color: red"
+                                    role="alert"
+                                    *ngIf="f.submitted && isLoginFailed && form.username!=null && form.password!=null"
+                            >
+                             Connexion échouée: {{ errorMessage }}
+                            </div>
+                        </div>
+                            <input  type="submit" class="btnRegister"  value="Register"/>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <h3  class="register-heading">S'inscrire</h3>
+
+                        <form class="row register-form"
+                                *ngIf="!isSuccessful"
+                                name="form"
+                                (ngSubmit)="f.form.valid && onSubmit()"
+                                #f="ngForm"
+                                novalidate
+                        >
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control"  name="fullname" placeholder="Nom Complet *"  [(ngModel)]="form2.fullname"
+                                       required
+                                       minlength="3"
+                                       maxlength="20"
+                                       #fullname="ngModel" />
+                                <div style="color: red" *ngIf="f.submitted && fullname.invalid">
+                                    <div *ngIf="fullname.errors.required">Nom complet requis!</div>
+                            </div>
+
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control"   name="email" placeholder="Email *" [(ngModel)]="form2.email"
+                                       required
+                                       email
+                                       #email="ngModel" />
+                                <div style="color: red" *ngIf="f.submitted && email.invalid">
+                                    <div *ngIf="email.errors.required">Email requis!</div>
+                                    <div *ngIf="email.errors.email">
+                                        L'e-mail doit être une adresse e-mail valide.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control"   name="username" placeholder="Username *"  [(ngModel)]="form2.username"
+                                       required
+                                       minlength="3"
+                                       maxlength="20"
+                                       #username="ngModel" />
+                                <div style="color: red" *ngIf="f.submitted && username.invalid">
+                                    <div *ngIf="username.errors.required">Username requis!</div>
+                                    <div *ngIf="username.errors.minlength">
+                                        Le nom d'utilisateur doit comporter au moins 3 caractères.
+                                    </div>
+                                    <div *ngIf="username.errors.maxlength">
+                                        Le nom d'utilisateur ne doit pas dépasser 20 caractères.
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                    <input type="password"  class="form-control" placeholder="Mot de passe *"   name="password" [(ngModel)]="form2.password"
+                                           required
+                                           minlength="6"
+                                           #password="ngModel"/>
+                                    <div style="color: red" *ngIf="f.submitted && password.invalid">
+                                        <div *ngIf="password.errors.required">Mot de passe  requis!</div>
+                                        <div *ngIf="password.errors.minlength">
+                                            Le mot de passe doit être au moins de 6 caractères.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="date" name="date_naissance" class="form-control" placeholder="Date de naissance" [(ngModel)]="form2.date_naissance" />
+                                </div>
+
+                        </div>
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Mot de passe de confirmation *"   name="password2" [(ngModel)]="form2.password2"/>
+                            </div>
+                            </div>
+                            <div class="col-md-6">
+                            <input type="submit" class="btnRegister"  value="Register" />
+                            </div>
+                            <div class="col-md-6">
+                            <div   class="alert alert-danger" *ngIf="f.submitted && isSignUpFailed">
+                                Échec de l'inscription !<br />{{ errorMessage }}
+                            </div>
+                            <div class="alert alert-success" *ngIf="isSuccessful">
+                                Your registration is successful!
+                            </div>
+                            </div>
+                        </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+</html>

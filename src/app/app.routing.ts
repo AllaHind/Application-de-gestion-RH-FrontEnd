@@ -11,12 +11,14 @@ import {IconsComponent} from './icons/icons.component';
 import {TableListComponent} from './table-list/table-list.component';
 import {TypographyComponent} from './Document/typography.component';
 import {UserProfileComponent} from './profil/user-profile.component';
+import {AccountComponent} from './account/account.component';
+import {RegisterComponent} from './register/register.component';
 
 
-export  const components=[LoginComponent,DashboardComponent,AdminLayoutComponent]
+export  const components=[LoginComponent,DashboardComponent,AdminLayoutComponent,RegisterComponent]
 const routes: Routes = [
+    {path:'login', component: components[0]},
   {path:'', component: components[0]},
-  {path:'login', component: components[0]},
   {
     path: '',
     redirectTo: 'dashboard',
@@ -29,7 +31,8 @@ const routes: Routes = [
       loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule',
 
     }]
-  }
+  },
+  {path:'register', component: components[3]},
 ];
 
 

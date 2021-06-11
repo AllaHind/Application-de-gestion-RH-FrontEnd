@@ -1,125 +1,95 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {User} from '../controller/model/user.model';
+import {UserService} from '../controller/service/user.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {ConfirmDialogService} from '../controller/service/confirm-dialog.service';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {AbsenceCreateComponent} from '../absence-create/absence-create.component';
+import {UserCreateComponent} from '../user-create/user-create.component';
+import {Subject} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 declare const google: any;
 
-interface Marker {
-lat: number;
-lng: number;
-label?: string;
-draggable?: boolean;
-}
+declare var $: any;
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
   styleUrls: ['./maps.component.css']
 })
-export class MapsComponent implements OnInit {
+export class MapsComponent implements  OnInit {
 
-  constructor() { }
 
-  ngOnInit() {
+    get user(): User {
+        return this.userService.user;
+    }
 
-    var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
-    var mapOptions = {
-        zoom: 13,
-        center: myLatlng,
-        scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
-        styles: [{
-            "featureType": "water",
-            "stylers": [{
-                "saturation": 43
-            }, {
-                "lightness": -11
-            }, {
-                "hue": "#0088ff"
-            }]
-        }, {
-            "featureType": "road",
-            "elementType": "geometry.fill",
-            "stylers": [{
-                "hue": "#ff0000"
-            }, {
-                "saturation": -100
-            }, {
-                "lightness": 99
-            }]
-        }, {
-            "featureType": "road",
-            "elementType": "geometry.stroke",
-            "stylers": [{
-                "color": "#808080"
-            }, {
-                "lightness": 54
-            }]
-        }, {
-            "featureType": "landscape.man_made",
-            "elementType": "geometry.fill",
-            "stylers": [{
-                "color": "#ece2d9"
-            }]
-        }, {
-            "featureType": "poi.park",
-            "elementType": "geometry.fill",
-            "stylers": [{
-                "color": "#ccdca1"
-            }]
-        }, {
-            "featureType": "road",
-            "elementType": "labels.text.fill",
-            "stylers": [{
-                "color": "#767676"
-            }]
-        }, {
-            "featureType": "road",
-            "elementType": "labels.text.stroke",
-            "stylers": [{
-                "color": "#ffffff"
-            }]
-        }, {
-            "featureType": "poi",
-            "stylers": [{
-                "visibility": "off"
-            }]
-        }, {
-            "featureType": "landscape.natural",
-            "elementType": "geometry.fill",
-            "stylers": [{
-                "visibility": "on"
-            }, {
-                "color": "#b8cb93"
-            }]
-        }, {
-            "featureType": "poi.park",
-            "stylers": [{
-                "visibility": "on"
-            }]
-        }, {
-            "featureType": "poi.sports_complex",
-            "stylers": [{
-                "visibility": "on"
-            }]
-        }, {
-            "featureType": "poi.medical",
-            "stylers": [{
-                "visibility": "on"
-            }]
-        }, {
-            "featureType": "poi.business",
-            "stylers": [{
-                "visibility": "simplified"
-            }]
-        }]
+    get users(): Array<User> {
+        return this.userService.users;
+    }
 
-    };
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    constructor(private userService: UserService, private confirmDialogService: ConfirmDialogService, private dialog: MatDialog) {
+    }
 
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        title: "Hello World!"
-    });
+    ngOnInit() {
+        this.userService.findall();
+    }
 
-    // To add the marker to the map, call setMap();
-    marker.setMap(map);
-  }
 
+    delete(user: User, index: number) {
+        this.confirmDialogService.openConfirmDialog('êtes vous  sure de vouloir supprimer cet employe?').afterClosed().subscribe(res => {
+            if (res) {
+                this.userService.delete(user, index);
+                this.showNotification('top', 'right', 'Employé supprimé avec succès', 'danger');
+            }
+        });
+
+    }
+
+    showNotification(from, align, msg, type) {
+
+
+        $.notify({
+            icon: "notifications",
+            message: msg
+
+        }, {
+            type: type,
+            timer: 4000,
+            placement: {
+                from: from,
+                align: align
+            },
+            template: '<div data-notify="container" class="col-xl-4 col-lg-4 col-11 col-sm-4 col-md-4 alert alert-{0} alert-with-icon" role="alert">' +
+                '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+                '<i class="material-icons" data-notify="icon">notifications</i> ' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span data-notify="message">{2}</span>' +
+                '<div class="progress" data-notify="progressbar">' +
+                '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                '</div>' +
+                '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                '</div>'
+        });
+    }
+
+    add() {
+
+        const dialogconfig = new MatDialogConfig();
+        dialogconfig.disableClose = true;
+        dialogconfig.autoFocus = true;
+        dialogconfig.width = "60%";
+
+        this.dialog.open(UserCreateComponent, dialogconfig);
+    }
 }
+
+
+
+
+
+
+
+
+

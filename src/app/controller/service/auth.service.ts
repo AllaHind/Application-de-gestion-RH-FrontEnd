@@ -26,7 +26,20 @@ export class AuthService {
     return this.http.post(AUTH_API + 'signup', {
       username: user.username,
       email: user.email,
-      password: user.password
+      password: user.password,
+      password2: user.password2,
+      fullname:user.fullname,
+      date_naissance : user.date_naissance,
+      emmploi:user.emmploi,
+      dateEmbauche: user.dateEmbauche,
+      datechelle:user.datechelle,
+      datechelon:   user.datechelon,
+      echelle: user.echelle,
+      echelon: user.echelon,
+      responsable:  user.responsable,
+      matricule:  user.matricule,
+      uniteOrgani:user.uniteOrgani
+
     }, httpOptions);
   }
 }

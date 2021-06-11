@@ -1,0 +1,21 @@
+<button  (click)="onClose()" style="margin-left: 85%" tabindex="-1" class="btn-dialog-close" mat-stroked-button ><mat-icon>clear</mat-icon></button>
+<div class="card">
+
+
+    <div class="card-body" >
+
+        <mat-form-field appearance="fill" >
+            <mat-label>Libellé</mat-label>
+            <mat-select matNativeControl required [(ngModel)]="document.libelle">
+                <mat-option  value="Attestation de congé">Attestation de congé</mat-option>
+                <mat-option value="Attestation de salaire">Attestation de salaire</mat-option>
+                <mat-option value="Carte Cnops">Carte Cnops</mat-option>
+                <mat-option value="Bulletin de paie">Bulletin de paie</mat-option>
+                <mat-option value="Carte RCAR">Carte RCAR</mat-option>
+                <mat-option value="Carte professionnelle">Carte professionnelle</mat-option>
+
+            </mat-select>
+        </mat-form-field>
+        <button  [disabled]="document.libelle==null" style="margin-left: 350px;margin-top: 10px"   mat-raised-button  color="primary" (click)="save()">Demander</button>
+    </div>
+    </div>

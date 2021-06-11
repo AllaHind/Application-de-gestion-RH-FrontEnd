@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {DocumentService} from '../controller/service/document.service';
 import {Document} from '../controller/model/document.model';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ConfirmDialogService} from '../controller/service/confirm-dialog.service';
+import {DocComponent} from '../doc/doc.component';
+import {UploadFileService} from '../controller/service/upload-file.service';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -12,7 +15,9 @@ import {ConfirmDialogService} from '../controller/service/confirm-dialog.service
 })
 export class TypographyComponent implements OnInit {
 
-  constructor(private documentService: DocumentService,private dialog: MatDialog, private confirmDialogService: ConfirmDialogService) { }
+    fileInfos: Observable<any>;
+    currentDate = new Date();
+  constructor(private documentService: DocumentService,private uploadService:UploadFileService,private dialog: MatDialog, private confirmDialogService: ConfirmDialogService) { }
   get document(): Document {
 
     return this.documentService.document;
@@ -42,7 +47,8 @@ save()
     }
 
   ngOnInit():void {
-    this.documentService.iniit();
+    this.documentService.findall();
+      this.fileInfos = this.uploadService.getFiles();
   }
   exportTermePdf(){
      this.documentService.exportTermePdf().subscribe(x=>{
@@ -66,5 +72,43 @@ save()
 
     );
   }
+    add() {
 
+        const dialogconfig = new MatDialogConfig();
+        dialogconfig.disableClose = true;
+        dialogconfig.autoFocus = true;
+        dialogconfig.width = "40%";
+
+        this.dialog.open(DocComponent, dialogconfig);
+    }
+    lire(file: any) {
+        this.uploadService.getFile(file).subscribe(
+            data => {
+                // tslint:disable-next-line:prefer-const
+                let blob = new Blob([data], {type: file.type})
+                const url = window.URL.createObjectURL(blob)
+                 const win = window.open(url)
+
+            },
+            err => {
+                console.log(err)
+            });
+    }
+    downloadFile(file: any) {
+        this.uploadService.getFile(file).subscribe(
+            data => {
+                // tslint:disable-next-line:prefer-const
+                let blob = new Blob([data], {type: file.type})
+                const url = window.URL.createObjectURL(blob)
+                 // const win = window.open(url)
+                const anchor = document.createElement('a')
+               anchor.href = url;
+               anchor.download = file.name;
+               anchor.click()
+            },
+            err => {
+                console.log(err)
+            });
+    }
 }
+

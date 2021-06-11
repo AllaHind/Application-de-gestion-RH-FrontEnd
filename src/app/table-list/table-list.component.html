@@ -5,8 +5,8 @@
                 <div class="col-md-15">
                     <div class="card">
 
-    <div class="card-header card-header-danger">
-        <h4 class="card-title">Demandes absences</h4>
+    <div class="card-header card-header-info">
+        <h3 class="card-title">Demandes absences</h3>
     </div>
                         <button style="position: relative;left: 20px;top:10px" mat-fab color="primary" (click)="add()">
                             <mat-icon>add</mat-icon>
@@ -30,6 +30,7 @@
             <tbody>
             <tr>
             <tr *ngFor="let a of absences | paginate : {id:'listing' , itemsPerPage:6,currentPage:demandeAbsenceService.page,totalItems:demandeAbsenceService.totalRecords } ; index as i ">
+
                 <td>{{a.type}}</td>
                 <td>
                     <ng-container *ngIf="a.motif==null">---</ng-container>
@@ -47,7 +48,7 @@
                     </button></span>
                     </ng-container>
 
-                    <ng-container><span>    <button [disabled]="a.status=='En cours de traitement'" (click)="delete(a,i)" mat-fab color="warn" aria-label="Example icon button with a delete icon">
+                    <ng-container><span>    <button [disabled]="a.status=='En cours de traitement'"  (click)="delete(a.id)" mat-fab color="warn" aria-label="Example icon button with a delete icon">
                         <mat-icon>delete</mat-icon>
                     </button></span>
                     </ng-container>

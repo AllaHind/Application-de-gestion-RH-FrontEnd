@@ -16,7 +16,7 @@ export class ConfirmDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public delete(absence: DemandeAbsence, index: number) {
+  public delete(absence:DemandeAbsence,index: number) {
     return this.demandeAbsenceService.delete(absence, index);
   }
   onClose() {
